@@ -1,3 +1,7 @@
 <resources>
   <string name="app_name">NewsApp</string>
+  <string name="enter_search_content">Enter search content</string>
+  <string name="button_find">Find</string>
+  <string name="No_internet_connection">No internet connection.</string>
+  <string name="No_news_found">No news found.</string>
 </resources>
