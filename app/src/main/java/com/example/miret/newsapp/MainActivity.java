@@ -19,9 +19,11 @@ public class MainActivity extends AppCompatActivity {
     button.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        EditText editText = (EditText) findViewById(R.id.edit_text_view);
+        EditText contentEditText = (EditText) findViewById(R.id.content_edit_text_view);
+        EditText apiKeyEditText = (EditText) findViewById(R.id.api_key_edit_text_view);
         Intent newsListActivityIntent = new Intent(MainActivity.this, NewsListActivity.class);
-        newsListActivityIntent.putExtra("content", editText.getText().toString());
+        newsListActivityIntent.putExtra("content", contentEditText.getText().toString());
+        newsListActivityIntent.putExtra("apiKey", apiKeyEditText.getText().toString());
         String s = getString(R.string.settings_search_content_default);
         startActivity(newsListActivityIntent);
       }

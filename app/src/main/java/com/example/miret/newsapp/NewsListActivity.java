@@ -60,7 +60,7 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
     ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(
         Context.CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-    Log.e("LOG", "initLoader");
+    Log.e("LOG", "initLoader - onCreate");
     if (networkInfo != null && networkInfo.isConnected()) {
       getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
     } else {
@@ -75,23 +75,34 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
   public Loader<List<News>> onCreateLoader(int id, Bundle args) {
     Intent intent = getIntent();
     String searchContent = intent.getStringExtra("content");
+    String apiKey = intent.getStringExtra("apiKey");
 
     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+    if (searchContent != null) {
+      sharedPrefs.edit().putString(getString(R.string.settings_search_content_key), searchContent)
+          .apply();
+    }
     String defContent = sharedPrefs.getString(getString(R.string.settings_search_content_key),
         getString(R.string.settings_search_content_default));
 
     String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key),
         getString(R.string.settings_order_by_default));
 
+    if (apiKey == null || apiKey.isEmpty()) {
+      apiKey = sharedPrefs
+          .getString(getString(R.string.apikey_key), getString(R.string.apikey_value));
+    }
+
     Uri baseUri = Uri.parse(GUARDIANS_REQUEST_URL);
     Uri.Builder uriBuilder = baseUri.buildUpon();
 
     uriBuilder.appendQueryParameter("order-by", orderBy);
     uriBuilder.appendQueryParameter("q", defContent);
-    uriBuilder.appendQueryParameter("api-key", "test");
+    uriBuilder.appendQueryParameter("api-key", apiKey);
 
     Log.e("LOG",
-        "onCreateLoader " + uriBuilder.toString() + " " + defContent + " " + searchContent);
+        "onCreateLoader " + uriBuilder.toString() + " " + apiKey);
     return new NewsLoader(this, uriBuilder.toString());
   }
 

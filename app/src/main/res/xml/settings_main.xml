@@ -14,4 +14,5 @@
     android:key="@string/settings_search_content_key"
     android:selectAllOnFocus="true"
     android:title="@string/settings_search_content_label"/>
+
 </PreferenceScreen>
