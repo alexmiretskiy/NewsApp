@@ -4,12 +4,17 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,7 +27,7 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
 
   private static final int NEWS_LOADER_ID = 1;
   private NewsAdapter adapter;
-  String requestUrl;
+  private static final String GUARDIANS_REQUEST_URL = "https://content.guardianapis.com/search";
 
   TextView emptyStateTextView;
 
@@ -31,9 +36,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.news_list_activity);
-
-    Intent intent = getIntent();
-    requestUrl = intent.getStringExtra("requestUrl");
 
     ListView newsListView = (ListView) findViewById(R.id.list_view);
 
@@ -58,7 +60,7 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
     ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(
         Context.CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
+    Log.e("LOG", "initLoader");
     if (networkInfo != null && networkInfo.isConnected()) {
       getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
     } else {
@@ -71,14 +73,33 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
 
   @Override
   public Loader<List<News>> onCreateLoader(int id, Bundle args) {
-    return new NewsLoader(this, requestUrl);
+    Intent intent = getIntent();
+    String searchContent = intent.getStringExtra("content");
+
+    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    String defContent = sharedPrefs.getString(getString(R.string.settings_search_content_key),
+        getString(R.string.settings_search_content_default));
+
+    String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key),
+        getString(R.string.settings_order_by_default));
+
+    Uri baseUri = Uri.parse(GUARDIANS_REQUEST_URL);
+    Uri.Builder uriBuilder = baseUri.buildUpon();
+
+    uriBuilder.appendQueryParameter("order-by", orderBy);
+    uriBuilder.appendQueryParameter("q", defContent);
+    uriBuilder.appendQueryParameter("api-key", "test");
+
+    Log.e("LOG",
+        "onCreateLoader " + uriBuilder.toString() + " " + defContent + " " + searchContent);
+    return new NewsLoader(this, uriBuilder.toString());
   }
 
   @Override
   public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
     View loadingIndicator = findViewById(R.id.loading_indicator);
     loadingIndicator.setVisibility(View.GONE);
-
+    Log.e("LOG", "onLoadFinished");
     emptyStateTextView.setText(R.string.No_news_found);
 
     adapter.clear();
@@ -90,5 +111,23 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
   @Override
   public void onLoaderReset(Loader<List<News>> loader) {
     adapter.clear();
+    Log.e("LOG", "onLoaderReset");
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.action_settings) {
+      Intent settingsIntent = new Intent(this, SettingsActivity.class);
+      startActivity(settingsIntent);
+    }
+    Log.e("LOG", "onOptionsItemSelected");
+    return super.onOptionsItemSelected(item);
   }
 }

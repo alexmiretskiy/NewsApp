@@ -19,5 +19,12 @@
       </intent-filter>
     </activity>
     <activity android:name=".NewsListActivity"/>
+    <activity
+      android:label="@string/settings_title"
+      android:name=".SettingsActivity">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".NewsListActivity"/>
+    </activity>
   </application>
 </manifest>
