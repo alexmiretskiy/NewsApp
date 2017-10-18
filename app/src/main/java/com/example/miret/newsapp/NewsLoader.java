@@ -4,12 +4,11 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import java.util.List;
 
-
-public class NewsLoader extends AsyncTaskLoader<List<News>> {
+class NewsLoader extends AsyncTaskLoader<List<News>> {
 
   private String url;
 
-  public NewsLoader(Context context, String url) {
+  NewsLoader(Context context, String url) {
     super(context);
     this.url = url;
   }

@@ -15,16 +15,26 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Button button = (Button) findViewById(R.id.find_button);
-    button.setOnClickListener(new OnClickListener() {
+    Button buttonSetApiKey = (Button) findViewById(R.id.enter_api_key_button);
+    Button buttonUseTestApiKey = (Button) findViewById(R.id.use_test_api_key_button);
+
+    buttonSetApiKey.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        EditText contentEditText = (EditText) findViewById(R.id.content_edit_text_view);
         EditText apiKeyEditText = (EditText) findViewById(R.id.api_key_edit_text_view);
-        Intent newsListActivityIntent = new Intent(MainActivity.this, NewsListActivity.class);
-        newsListActivityIntent.putExtra("content", contentEditText.getText().toString());
+        Intent newsListActivityIntent = new Intent(MainActivity.this,
+            NewsContentSearchActivity.class);
         newsListActivityIntent.putExtra("apiKey", apiKeyEditText.getText().toString());
-        String s = getString(R.string.settings_search_content_default);
+        startActivity(newsListActivityIntent);
+      }
+    });
+
+    buttonUseTestApiKey.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent newsListActivityIntent = new Intent(MainActivity.this,
+            NewsContentSearchActivity.class);
+        newsListActivityIntent.putExtra("apiKey", "test");
         startActivity(newsListActivityIntent);
       }
     });

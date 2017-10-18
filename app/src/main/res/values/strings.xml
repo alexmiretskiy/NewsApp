@@ -6,9 +6,8 @@
   <string name="No_news_found">No news found.</string>
   <string name="settings_menu_item">Settings</string>
   <string name="settings_title">News Settings</string>
-  <string name="enter_api_key">Enter API key if you have</string>
   <!---->
-  <string name="settings_search_content_label">Default content</string>
+  <string name="settings_search_content_label">Current content</string>
   <string name="settings_search_content_key" translatable="false">def_content</string>
   <string name="settings_search_content_default" translatable="false">box</string>
   <!---->
@@ -28,4 +27,12 @@
   <!---->
   <string name="apikey_key" translatable="false">api_key</string>
   <string name="apikey_value" translatable="false">test</string>
+  <!---->
+  <string name="enter_api_key">Enter The Guardian API key, if you have one</string>
+  <string name="use_test_api_key">Use test API key</string>
+  <string name="if_you_dont_have_api_key">If you don`t have API key, you can use test API key.</string>
+  <string name="hello_in_this_page_you_can_choose_search_content_just_enter_the_theme_you_are_interested_in">
+    Hello, in this page you can choose search content. Just enter the theme you are interested in.</string>
+  <string name="hello_in_this_page_you_can_choose_why_api_key_you_can_use">
+    Hello, in this page you can choose, why API key you can use.</string>
 </resources>

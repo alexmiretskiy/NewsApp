@@ -13,37 +13,22 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="50dp"
     android:gravity="center_horizontal"
-    android:text="@string/hello_in_this_page_you_can_choose_why_api_key_you_can_use"
+    android:text="@string/hello_in_this_page_you_can_choose_search_content_just_enter_the_theme_you_are_interested_in"
     android:textColor="@color/colorPrimaryDark"
     android:textSize="24sp"
     />
   <EditText
-    android:id="@+id/api_key_edit_text_view"
+    android:id="@+id/content_edit_text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:hint="@string/enter_api_key"
+    android:hint="@string/enter_search_content"
     android:inputType="text"
     />
   <Button
-    android:id="@+id/enter_api_key_button"
+    android:id="@+id/find_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/enter_key_button"
-    android:textColor="@color/colorPrimaryDark"
-    />
-  <TextView
-    android:id="@+id/text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:text="@string/if_you_dont_have_api_key"
-    android:textColor="@color/colorPrimaryDark"
-    />
-  <Button
-    android:id="@+id/use_test_api_key_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/use_test_api_key"
+    android:text="@string/button_find"
     android:textColor="@color/colorPrimaryDark"
     />
 </LinearLayout>

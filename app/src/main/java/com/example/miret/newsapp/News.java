@@ -1,6 +1,5 @@
 package com.example.miret.newsapp;
 
-
 class News {
 
   private String sectionName;
@@ -8,26 +7,26 @@ class News {
   private String webPublicationDate;
   private String webUrl;
 
-  public News(String sectionName, String webTitle, String webPublicationDate, String webUrl) {
+  News(String sectionName, String webTitle, String webPublicationDate, String webUrl) {
     this.sectionName = sectionName;
     this.webTitle = webTitle;
     this.webPublicationDate = webPublicationDate;
     this.webUrl = webUrl;
   }
 
-  public String getSectionName() {
+  String getSectionName() {
     return sectionName;
   }
 
-  public String getWebTitle() {
+  String getWebTitle() {
     return webTitle;
   }
 
-  public String getWebPublicationDate() {
+  String getWebPublicationDate() {
     return webPublicationDate;
   }
 
-  public String getWebUrl() {
+  String getWebUrl() {
     return webUrl;
   }
 }

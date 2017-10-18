@@ -8,7 +8,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -16,8 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.settings_activity);
-
-    Log.e("LOG", "onCreateSettingsActivity ");
   }
 
   public static class NewsPreferenceFragment extends PreferenceFragment implements
@@ -27,8 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       addPreferencesFromResource(R.xml.settings_main);
-
-      Log.e("LOG", "onCreateNewsPreferenceFragment ");
 
       Preference defContent = findPreference(getString(R.string.settings_search_content_key));
       bindPreferenceSummaryToValue(defContent);

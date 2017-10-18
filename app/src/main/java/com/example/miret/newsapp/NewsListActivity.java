@@ -50,7 +50,10 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         News currentNews = adapter.getItem(position);
 
-        Uri newsUri = Uri.parse(currentNews.getWebUrl());
+        Uri newsUri = null;
+        if (currentNews != null) {
+          newsUri = Uri.parse(currentNews.getWebUrl());
+        }
 
         Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
         startActivity(websiteIntent);
@@ -60,7 +63,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
     ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(
         Context.CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-    Log.e("LOG", "initLoader - onCreate");
     if (networkInfo != null && networkInfo.isConnected()) {
       getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
     } else {
@@ -101,8 +103,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
     uriBuilder.appendQueryParameter("q", defContent);
     uriBuilder.appendQueryParameter("api-key", apiKey);
 
-    Log.e("LOG",
-        "onCreateLoader " + uriBuilder.toString() + " " + apiKey);
     return new NewsLoader(this, uriBuilder.toString());
   }
 
@@ -110,7 +110,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
   public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
     View loadingIndicator = findViewById(R.id.loading_indicator);
     loadingIndicator.setVisibility(View.GONE);
-    Log.e("LOG", "onLoadFinished");
     emptyStateTextView.setText(R.string.No_news_found);
 
     adapter.clear();
@@ -122,7 +121,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
   @Override
   public void onLoaderReset(Loader<List<News>> loader) {
     adapter.clear();
-    Log.e("LOG", "onLoaderReset");
   }
 
   @Override
@@ -138,7 +136,6 @@ public class NewsListActivity extends AppCompatActivity implements LoaderCallbac
       Intent settingsIntent = new Intent(this, SettingsActivity.class);
       startActivity(settingsIntent);
     }
-    Log.e("LOG", "onOptionsItemSelected");
     return super.onOptionsItemSelected(item);
   }
 }

@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class NewsAdapter extends ArrayAdapter<News> {
+class NewsAdapter extends ArrayAdapter<News> {
 
   private static final String DATE_SEPARATOR = "T";
 
-  public NewsAdapter(@NonNull Context context, @NonNull List<News> newsList) {
+  NewsAdapter(@NonNull Context context, @NonNull List<News> newsList) {
     super(context, 0, newsList);
   }
 
@@ -31,16 +31,26 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
     TextView sectionNameTextView = (TextView) listItemView
         .findViewById(R.id.section_name_text_view);
-    sectionNameTextView.setText(currentNews.getSectionName());
+    if (currentNews != null) {
+      sectionNameTextView.setText(currentNews.getSectionName());
+    }
 
     TextView webTitleTextView = (TextView) listItemView.findViewById(R.id.web_title_text_view);
-    webTitleTextView.setText(currentNews.getWebTitle());
+    if (currentNews != null) {
+      webTitleTextView.setText(currentNews.getWebTitle());
+    }
 
-    String originalDate = currentNews.getWebPublicationDate();
+    String originalDate = null;
+    if (currentNews != null) {
+      originalDate = currentNews.getWebPublicationDate();
+    }
 
-    String[] parts = originalDate.split(DATE_SEPARATOR);
+    String[] parts = new String[0];
+    if (originalDate != null) {
+      parts = originalDate.split(DATE_SEPARATOR);
+    }
     String datePart = parts[0];
-    String timePart = parts[1].replace("Z","");
+    String timePart = parts[1].replace("Z", "");
     TextView webPublicationDateTextView = (TextView) listItemView
         .findViewById(R.id.web_publication_date_text_view);
     webPublicationDateTextView.setText(datePart);

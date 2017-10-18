@@ -18,6 +18,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity android:name=".NewsContentSearchActivity"/>
     <activity android:name=".NewsListActivity"/>
     <activity
       android:label="@string/settings_title"
